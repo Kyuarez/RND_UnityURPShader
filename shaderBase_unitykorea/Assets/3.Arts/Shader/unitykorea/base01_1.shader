@@ -49,6 +49,10 @@ Shader "Custom/UnityKorea/base01_1"
 
        	    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"        	
   
+  
+            //half4 _TintColor;
+            float _Intensity;
+            float4 _TintColor;
             /*
             struct 식별자
             {
@@ -64,8 +68,6 @@ Shader "Custom/UnityKorea/base01_1"
          	{
             	float4 vertex : POSITION; //로컬 공간의 정점 위치
           	};
-
-            half4 _TintColor;
 
             /* 보간기(vertex 계산된 값을 pixes(frag)로 이동)
             SV_POSITION :: 투영 공간으로 변환 된 후의 버텍스 포지션
@@ -83,7 +85,7 @@ Shader "Custom/UnityKorea/base01_1"
             /*
             VertexInput을 받아서 어떻게 VertexOutput을 출력할 것인지 처리
             */
-      	    VertexOutput vert(VertexInput v)
+      	    VertexOutput vert(VertexInput v) //vertex buffer에서 계산한 정보
         	{
 
           	    VertexOutput o;      
@@ -92,10 +94,14 @@ Shader "Custom/UnityKorea/base01_1"
          	    return o;
         	}
 
+            /*
+            픽셀로 배열된 오브젝트의 최종 컬러값 계산하는 단계
+            */
         	half4 frag(VertexOutput i) : SV_Target
         	{ 
-          	    return half4(_TintColor);  
-        	}
+          	    //return half4(_TintColor);  
+                return float4(_TintColor * _Intensity);
+            }
                     
         	ENDHLSL  
     	}
