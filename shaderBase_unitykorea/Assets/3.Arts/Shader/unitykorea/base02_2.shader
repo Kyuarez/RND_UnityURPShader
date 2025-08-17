@@ -1,8 +1,9 @@
-Shader "Custom/UnityKorea/base01_3"
+Shader "Custom/UnityKorea/base02_2"
 {
     /*
-    [Texture Sampling]
-    Base Shader with Main Texture + Sampler
+    [Transparent]
+    해당 픽셀의 값을 알파값에 따라 덧 그려 반투명으로 그려지게 된다. 
+    자동으로 정렬되는 2500까지의 shader와 달리 여기서부터는 사용자가 렌더큐를 직접 관리해야 한다
     */
 
     Properties
@@ -10,20 +11,24 @@ Shader "Custom/UnityKorea/base01_3"
         _TintColor("Color", color) = (1,1,1,1) 
         _Intensity("Range", Range(0, 1)) = 0.5
         _MainTex("Main Texture", 2D) = "white"{}
+        _Alpha("Alpha", Range(0, 1)) = 0.5
     }  
 
-    //메시 렌더링 시, Unity는 GPU와 호환되는 SubShader 블록을 선택(Tags 포함)
 	SubShader
 	{  
 
 	    Tags
         {
 	        "RenderPipeline"="UniversalPipeline"
-            "RenderType"="Opaque"
-            "Queue"="Geometry"
+            //@TK : Transparent 방식을 위해 렌더타입과 Queue 변경 (그리는 순서 변경)
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
         }
+        //@TK: BlendOperation 선언해야한다. (투명될 때, 겹쳐지는 부분의 우선순위 결정)
     	Pass 
-    	{  		
+    	{  	
+            Blend SrcAlpha OneMinusSrcAlpha
+
      	    Name "Universal Forward"
             Tags 
             { 
@@ -46,9 +51,11 @@ Shader "Custom/UnityKorea/base01_3"
             float4 _MainTex_ST;
             SamplerState sampler_MainTex;
 
+            float _Alpha;
+
          	struct VertexInput 
          	{
-            	float4 vertex : POSITION; //로컬 공간의 정점 위치
+            	float4 vertex : POSITION;
           	    float2 uv : TEXCOORD0;
             };
 
@@ -59,7 +66,7 @@ Shader "Custom/UnityKorea/base01_3"
                 float2 uv : TEXCOORD0;
       	    };
 
-      	    VertexOutput vert(VertexInput v) //vertex buffer에서 계산한 정보
+      	    VertexOutput vert(VertexInput v) 
         	{
           	    VertexOutput o;      
           	    o.vertex = TransformObjectToHClip(v.vertex.xyz);
@@ -69,9 +76,10 @@ Shader "Custom/UnityKorea/base01_3"
 
         	half4 frag(VertexOutput i) : SV_Target
         	{ 
-                float4 color = _MainTex.Sample(sampler_MainTex, i.uv) * _TintColor * _Intensity;
-                //float4 color = tex2D(_MainTex, i.uv) * _TintColor * _Intensity;
-                return color;
+                float4 col = _MainTex.Sample(sampler_MainTex, i.uv);
+                col.rgb *= _TintColor * _Intensity;
+                col.a *= _Alpha;
+                return col;
             }
                     
         	ENDHLSL  

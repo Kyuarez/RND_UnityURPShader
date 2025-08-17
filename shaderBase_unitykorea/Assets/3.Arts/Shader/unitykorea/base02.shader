@@ -1,8 +1,10 @@
-Shader "Custom/UnityKorea/base01_3"
+Shader "Custom/UnityKorea/base02"
 {
     /*
     [Texture Sampling]
     Base Shader with Main Texture + Sampler
+    +)
+    복수의 텍스처 처리
     */
 
     Properties
@@ -10,6 +12,7 @@ Shader "Custom/UnityKorea/base01_3"
         _TintColor("Color", color) = (1,1,1,1) 
         _Intensity("Range", Range(0, 1)) = 0.5
         _MainTex("Main Texture", 2D) = "white"{}
+        _MainTex02("Main Texture2", 2D) = "white"{}
     }  
 
     //메시 렌더링 시, Unity는 GPU와 호환되는 SubShader 블록을 선택(Tags 포함)
@@ -43,6 +46,7 @@ Shader "Custom/UnityKorea/base01_3"
             float4 _TintColor;
 
             Texture2D _MainTex;
+            Texture2D _MainTex02; //@TK :: 샘플러를 분리했기에, 텍스처만 추가하면 됨.
             float4 _MainTex_ST;
             SamplerState sampler_MainTex;
 
@@ -69,9 +73,10 @@ Shader "Custom/UnityKorea/base01_3"
 
         	half4 frag(VertexOutput i) : SV_Target
         	{ 
-                float4 color = _MainTex.Sample(sampler_MainTex, i.uv) * _TintColor * _Intensity;
-                //float4 color = tex2D(_MainTex, i.uv) * _TintColor * _Intensity;
-                return color;
+                float4 col01 = _MainTex.Sample(sampler_MainTex, i.uv) * _TintColor * _Intensity;
+                float4 col02 = _MainTex02.Sample(sampler_MainTex, i.uv) * _TintColor * _Intensity;
+                float4 resultCol = col01 + col02;
+                return resultCol;
             }
                     
         	ENDHLSL  
