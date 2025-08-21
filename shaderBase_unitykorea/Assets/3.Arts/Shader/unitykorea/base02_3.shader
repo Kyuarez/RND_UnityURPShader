@@ -43,7 +43,7 @@ Shader "Custom/UnityKorea/base02_3"
 
             /*
             [ZWrite] 
-            오브젝트의 픽셀이 depth buffer에 작성되는지 여부를 제어(기본값은 On).
+            오브젝트의 픽셀이 depth buffer(깊이에 대한 정보값을 음영으로 표현)에 작성되는지 여부를 제어(기본값은 On).
             불투명한 오브젝트를 그릴 경우 On 상태로 유지하면 되지만 반투명한 효과를 그릴경우 ZWrite Off로 전환한다.
             */ 
             ZWrite [_ZWrite]
