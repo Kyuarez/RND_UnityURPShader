@@ -80,6 +80,12 @@
     "m_StickyNoteDatas": [
         {
             "m_Id": "47cb2de155df4ea989b49e57bf7b9cf6"
+        },
+        {
+            "m_Id": "98455df74c504574a07438525c40ba13"
+        },
+        {
+            "m_Id": "b551292824334a4b8af65ba95ea5afd7"
         }
     ],
     "m_Edges": [
@@ -1439,6 +1445,26 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "98455df74c504574a07438525c40ba13",
+    "m_Title": "R,G만 Add한 이유",
+    "m_Content": "텍스처 R,G => u, v좌표라서,\n다른 값을 추가로 안해도 됨.\n(오히려 이상하게 될 수 있음.)\n ",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -1001.5999755859375,
+        "y": -353.5999755859375,
+        "width": 200.0,
+        "height": 99.99998474121094
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "997f37f7312e4f2e81c1911483898c7a",
     "m_Group": {
@@ -1690,6 +1716,26 @@
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "b551292824334a4b8af65ba95ea5afd7",
+    "m_Title": "Fresnel Effect 곱하는 이유",
+    "m_Content": "[Fresnel의 본질 ]\nFresnel은 시점(View Direction)과 표면 노멀(Normal Vector) 사이의 각도 차이에 따라 값이 변한다.\n->\n외각은 더 많이 흔들리고, 중심은 별로 안 흔들림.\n(결국 외각 강조하기 위한 것이다.)\n ",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -1069.5999755859375,
+        "y": 440.8000183105469,
+        "width": 299.20001220703127,
+        "height": 125.59994506835938
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
 }
 
 {
