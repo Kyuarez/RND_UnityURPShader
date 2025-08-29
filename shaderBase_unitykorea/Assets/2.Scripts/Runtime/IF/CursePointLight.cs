@@ -19,7 +19,7 @@ namespace IF
 
         private void Update()
         {
-            m_CurseMaterial.SetVector("_LightPosition", m_PointLightTrs.position);
+            m_CurseMaterial.SetVector("_LightPos", m_PointLightTrs.position);
         }
     }
 
